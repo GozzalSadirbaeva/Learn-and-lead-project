@@ -4,12 +4,13 @@ import { FaRegBell } from "react-icons/fa";
 import { FiRefreshCcw } from "react-icons/fi";
 import { IoMdSettings } from "react-icons/io";
 import { Outlet, useNavigate } from "react-router-dom";
+import "./Navbar.css";
 const Navbar = () => {
   const navigate = useNavigate();
   return (
     <>
-      <Container className="py-2">
-        <div className="flex justify-between items-center">
+      <Container className="">
+        <div className="flex justify-between items-center bg-white py-3 px-6 shadow">
           <div className="flex gap-8">
             <h1>Logo</h1>
             <Button variant="contained">+ New</Button>

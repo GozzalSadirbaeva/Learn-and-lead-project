@@ -10,11 +10,24 @@ const App = () => {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<Navbar />}>
-          <Route path="/" element={<Sidebar />}>
-            <Route path="/" element={<Main />} />
-          </Route>
-        </Route>
+        <Route
+          path="/"
+          element={
+            <div className="flex flex-col h-screen">
+              <Navbar />
+
+              <div className="flex flex-1">
+                <div className="w-1/5 bg-gray-200 p-4">
+                  <Sidebar />
+                </div>
+
+                <div className="w-4/5 p-4">
+                  <Main />
+                </div>
+              </div>
+            </div>
+          }
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>

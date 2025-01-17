@@ -5,7 +5,7 @@ const Main = () => {
   if (!localStorage.getItem("token")) {
     return <Navigate to={"/login"} />;
   }
-  return <div>sfds</div>;
+  return <div>Main</div>;
 };
 
 export default Main;

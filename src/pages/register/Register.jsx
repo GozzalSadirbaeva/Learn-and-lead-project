@@ -52,6 +52,7 @@ const Register = () => {
         onSubmit={onSubmit}
         className="flex flex-col p-10 bg-[#5083ea98] gap-3 rounded-md justify-center"
       >
+        <h1 className="text-2xl font-medium text-center pb-4 text-gray-800">Register Now</h1>
         <input
           type="text"
           placeholder="Name"
@@ -67,7 +68,9 @@ const Register = () => {
           placeholder="Password"
           className="w-[400px] outline-none rounded-lg py-2 px-1"
         />
-        <Button variant="contained">Sign up</Button>
+        <Button type="submit" variant="contained">
+          Sign up
+        </Button>
       </form>
     </div>
   );
