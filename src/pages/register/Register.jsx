@@ -38,8 +38,8 @@ const Register = () => {
           password,
         }
       );
-      console.log(response);
-      if (response.status === 200) {
+      console.log(response.status);
+      if (response.status === 201) {
         localStorage.setItem("token", response.data.token);
         toast.success("Signed in successfully");
         navigate("/");
@@ -74,8 +74,8 @@ const Register = () => {
           validationSchema={RegisterSchema}
           onSubmit={onSubmit}
         >
-          {({ isSubmitting }) => (
-            <form className="flex flex-col gap-3">
+          {({ isSubmitting, handleSubmit }) => (
+            <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
               <div>
                 <label htmlFor="name">Name</label>
                 <Field

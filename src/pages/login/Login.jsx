@@ -66,8 +66,8 @@ const Login = () => {
           validationSchema={LoginSchema}
           onSubmit={onSubmit}
         >
-          {({ isSubmitting }) => (
-            <form className="flex flex-col gap-3">
+          {({ isSubmitting, handleSubmit }) => (
+            <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
               <div>
                 <label htmlFor="username">Username</label>
                 <Field
