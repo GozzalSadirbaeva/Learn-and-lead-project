@@ -1,4 +1,4 @@
-import { Button, Container } from "@mui/material";
+import { Button } from "@mui/material";
 import React from "react";
 import { FaRegBell } from "react-icons/fa";
 import { FiRefreshCcw } from "react-icons/fi";
@@ -9,37 +9,38 @@ const Navbar = () => {
   const navigate = useNavigate();
   return (
     <>
-      <Container className="">
-        <div className="flex justify-between items-center bg-white py-3 px-6 shadow">
-          <div className="flex gap-8">
-            <h1>Logo</h1>
-            <Button variant="contained">+ New</Button>
-          </div>
-          <form action="">
-            <input
-              type="text"
-              placeholder="Search"
-              className="w-full border py-1 px-1 outline-none"
-            />
-          </form>
-          <div className="flex gap-6">
-            <button>
-              <FiRefreshCcw />
-            </button>
-            <button>
-              <FaRegBell />
-            </button>
-            <button
-              onClick={() => {
-                localStorage.removeItem("token");
-                navigate("/login");
-              }}
-            >
-              <IoMdSettings />
-            </button>
-          </div>
+      <div className="flex justify-between items-center bg-[#f6f6f6] py-3 px-6 shadow">
+        <div className="flex gap-8">
+          <img src="./logo4.jpg" alt="" className="w-10" />
+          <Button variant="contained" sx={{ bgcolor: "#2ba1c4" }}>
+            + New
+          </Button>
         </div>
-      </Container>
+        <form action="">
+          <input
+            type="text"
+            placeholder="Search"
+            className="w-96 border rounded-md py-1 px-1 outline-none"
+          />
+        </form>
+        <div className="flex gap-6">
+          <button>
+            <FiRefreshCcw  className=""/>
+          </button>
+          <button>
+            <FaRegBell />
+          </button>
+          <button
+            onClick={() => {
+              localStorage.removeItem("token");
+              navigate("/login");
+            }}
+          >
+            <IoMdSettings />
+          </button>
+        </div>
+      </div>
+
       <Outlet />
     </>
   );

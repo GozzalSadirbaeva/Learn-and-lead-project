@@ -17,11 +17,11 @@ const App = () => {
               <Navbar />
 
               <div className="flex flex-1">
-                <div className="w-1/5 bg-gray-200 p-4">
+                <div className="w-1/5  ">
                   <Sidebar />
                 </div>
 
-                <div className="w-4/5 p-4">
+                <div className="w-4/5">
                   <Main />
                 </div>
               </div>

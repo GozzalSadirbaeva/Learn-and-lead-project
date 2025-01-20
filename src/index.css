@@ -2,9 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap");
+
 .bg-gradient {
   font-family: "Dancing Script", serif;
   background: linear-gradient(to right, #a851ff 0%, #ffb94f 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+.error{
+  color: red;
+  font-size: 0.9rem;
 }
