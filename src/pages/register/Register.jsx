@@ -38,11 +38,11 @@ const Register = () => {
           password,
         }
       );
-      console.log(response.status);
+      console.log(response);
       if (response.status === 201) {
-        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("AccesToken", response.data.token);
         toast.success("Signed in successfully");
-        navigate("/");
+        navigate("/main");
       }
     } catch (error) {
       console.error("Error registering user:", error.response || error.message);
@@ -51,8 +51,9 @@ const Register = () => {
       setSubmitting(false);
     }
   };
-  if (localStorage.getItem("token")) {
-    return <Navigate to={"/"} />;
+
+  if (localStorage.getItem("AccesToken")) {
+    return <Navigate to={"/main"} />;
   }
   const cancel = () => {
     navigate("/login");
@@ -77,7 +78,9 @@ const Register = () => {
           {({ isSubmitting, handleSubmit }) => (
             <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
               <div>
-                <label htmlFor="name">Name</label>
+                <label htmlFor="name" className="block">
+                  Name
+                </label>
                 <Field
                   type="text"
                   name="name"
@@ -91,7 +94,9 @@ const Register = () => {
                 />
               </div>
               <div>
-                <label htmlFor="username">Username</label>
+                <label htmlFor="username" className="block">
+                  Username
+                </label>
                 <Field
                   type="text"
                   name="username"
@@ -105,7 +110,9 @@ const Register = () => {
                 />
               </div>
               <div>
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password" className="block">
+                  Password
+                </label>
                 <Field
                   type="password"
                   name="password"

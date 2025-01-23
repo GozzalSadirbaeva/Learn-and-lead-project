@@ -33,9 +33,9 @@ const Login = () => {
       );
 
       if (response.status === 200) {
-        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("AccesToken", response.data.token);
         toast.success("Signed in successfully");
-        navigate("/");
+        navigate("/main");
       }
     } catch (error) {
       console.error(error);
@@ -45,8 +45,8 @@ const Login = () => {
     }
   };
 
-  if (localStorage.getItem("token")) {
-    return <Navigate to="/" />;
+  if (localStorage.getItem("AccesToken")) {
+    return <Navigate to="/main" />;
   }
 
   return (
@@ -69,7 +69,9 @@ const Login = () => {
           {({ isSubmitting, handleSubmit }) => (
             <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
               <div>
-                <label htmlFor="username">Username</label>
+                <label htmlFor="username" className="block">
+                  Username
+                </label>
                 <Field
                   type="text"
                   name="username"
@@ -83,7 +85,9 @@ const Login = () => {
                 />
               </div>
               <div>
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password" className="block">
+                  Password
+                </label>
                 <Field
                   type="password"
                   name="password"

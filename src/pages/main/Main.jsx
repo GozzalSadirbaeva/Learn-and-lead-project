@@ -1,11 +1,7 @@
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import DeleteIcon from "@mui/icons-material/Delete";
 import React from "react";
-import { Navigate } from "react-router-dom";
 const Main = () => {
-  if (!localStorage.getItem("token")) {
-    return <Navigate to={"/login"} />;
-  }
   return (
     <div>
       <div className="bg-white m-5 p-5 rounded-lg">

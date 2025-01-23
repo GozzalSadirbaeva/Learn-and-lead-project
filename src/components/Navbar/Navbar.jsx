@@ -1,11 +1,12 @@
-import { Button } from "@mui/material";
+import CachedIcon from "@mui/icons-material/Cached";
+import LogoutIcon from "@mui/icons-material/Logout";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import { Badge, Button } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
-import { FaRegBell } from "react-icons/fa";
-import { FiRefreshCcw } from "react-icons/fi";
-import { LuLogOut } from "react-icons/lu";
-import { Outlet, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./Navbar.css";
+
 const Navbar = () => {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
@@ -15,7 +16,7 @@ const Navbar = () => {
       "https://nt-shopping-list.onrender.com/api/groups/search",
       {
         headers: {
-          "x-auth-token": `${localStorage.getItem("token")}`,
+          "x-auth-token": `${localStorage.getItem("AccesToken")}`,
           "Content-Type": "application/json",
         },
         params: {
@@ -44,23 +45,21 @@ const Navbar = () => {
         </form>
         <div className="flex gap-6">
           <button>
-            <FiRefreshCcw className="" />
+            <CachedIcon />
           </button>
-          <button>
-            <FaRegBell />
-          </button>
+          <Badge color="error" badgeContent={99}>
+            <NotificationsIcon />
+          </Badge>
           <button
             onClick={() => {
-              localStorage.removeItem("token");
+              localStorage.removeItem("AccesToken");
               navigate("/login");
             }}
           >
-            <LuLogOut />
+            <LogoutIcon />
           </button>
         </div>
       </div>
-
-      <Outlet />
     </>
   );
 };
