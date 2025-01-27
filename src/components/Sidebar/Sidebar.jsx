@@ -30,7 +30,7 @@ const Sidebar = () => {
             },
           }
         );
-        console.log(response.data);
+        // console.log(response.data);
         setGroups(response.data);
       } catch (error) {
         console.error("Error fetching groups:", error);
