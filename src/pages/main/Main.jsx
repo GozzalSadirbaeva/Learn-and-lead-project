@@ -1,7 +1,24 @@
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import DeleteIcon from "@mui/icons-material/Delete";
-import React from "react";
+import axios from "axios";
+import React, { memo, useEffect, useState } from "react";
 const Main = () => {
+  const [me, setMe] = useState([]);
+
+  useEffect(() => {
+    (async function () {
+      let resme = await axios.get(
+        `https://nt-shopping-list.onrender.com/api/auth`,
+        {
+          headers: {
+            "x-auth-token": `${localStorage.getItem("AccesToken")}`,
+          },
+        }
+      );
+      setMe(resme.data);
+      console.log(resme.data);
+    })();
+  }, []);
   return (
     <div>
       <div className="bg-white m-5 p-5 rounded-lg">
@@ -23,11 +40,13 @@ const Main = () => {
             alt=""
             className="w-28 border rounded-full bg-slate-200"
           />
-
-          <p className="text-2xl font-semibold"> Test3</p>
+          <div>
+            <p className="text-3xl font-semibold">{me.name} </p>
+            <p className="text-lg font-normal pt-2">{me.username} </p>
+          </div>
           <div>
             <button className="bg-[#70a046] text-white rounded-md font-medium border px-2 py-1">
-              Active
+              {me.status}
             </button>
           </div>
         </div>
@@ -36,4 +55,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default memo(Main);

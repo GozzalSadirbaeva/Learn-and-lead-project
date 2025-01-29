@@ -8,3 +8,14 @@
   right: 1%;
   /* transform: translate(-50%, -50%); */
 }
+.add__member {
+  width: 700px;
+  height: 400px;
+  background-color: white;
+  border-radius: 10px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+

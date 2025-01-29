@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import axios from "axios";
 import { ErrorMessage, Field, Formik } from "formik";
-import React from "react";
+import React, { memo } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
@@ -38,7 +38,7 @@ const Register = () => {
           password,
         }
       );
-      console.log(response);
+      // console.log(response);
       if (response.status === 201) {
         localStorage.setItem("AccesToken", response.data.token);
         toast.success("Signed in successfully");
@@ -149,4 +149,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default memo (Register);

@@ -11,7 +11,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import "./Sidebar.css";
@@ -58,10 +58,12 @@ const Sidebar = () => {
         },
       }
     );
+    // console.log(response);
 
     if (response.status === 201) {
       toast.success(response.data.message);
       setGroups([...groups, response.data.group]);
+      
       setIsCreating(!isCreating);
     }
   };
@@ -157,4 +159,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default memo (Sidebar);

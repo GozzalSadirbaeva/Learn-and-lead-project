@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import axios from "axios";
 import { ErrorMessage, Field, Formik } from "formik";
-import React from "react";
+import React, { memo, useState } from "react";
 import { NavLink, Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
@@ -122,4 +122,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default memo(Login);
