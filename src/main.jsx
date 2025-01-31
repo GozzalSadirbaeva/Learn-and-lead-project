@@ -8,6 +8,7 @@ import "./index.css";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
+      {/* <Provider store={store}> */}
       <App />
       <ToastContainer
         position="top-right"
@@ -20,8 +21,8 @@ createRoot(document.getElementById("root")).render(
         draggable
         pauseOnHover
         theme="light"
-        // transition={Bounce}
       />
+      {/* </Provider> */}
     </BrowserRouter>
   </StrictMode>
 );

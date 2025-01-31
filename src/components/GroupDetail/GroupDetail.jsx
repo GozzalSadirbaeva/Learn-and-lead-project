@@ -8,15 +8,16 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import axios from "axios";
 import React, { memo, useEffect, useState } from "react";
 
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import "./GroupDetail.css";
 const GroupDetail = () => {
   const { groupId } = useParams();
-
+  const navigate = useNavigate();
   const [group, setGroup] = useState(null);
   const [setting, setSetting] = useState(false);
   const [addMember, setAddMember] = useState(false);
+  const [leaveFromGroup, setLeaveFromGroup] = useState(false);
   const [items, setItems] = useState([]);
   const [members, setMembers] = useState([]);
   const [me, setMe] = useState([]);
@@ -119,8 +120,7 @@ const GroupDetail = () => {
       console.log(error);
     }
   };
-  const leaveGroup = async (e) => {
-    e.preventDefault();
+  const leaveGroup = async () => {
     try {
       let res = await axios.post(
         `https://nt-shopping-list.onrender.com/api/groups/${groupId}/leave`,
@@ -131,12 +131,33 @@ const GroupDetail = () => {
           },
         }
       );
-      // console.log(res);
+      console.log(res);
       toast.success(res.data.message);
+      navigate("/main");
     } catch (error) {
       console.log(error);
+      toast.error(error.response.data.message);
     }
   };
+  const deleteGroup = async () => {
+    try {
+      let res = await axios.delete(
+        `https://nt-shopping-list.onrender.com/api/groups/${groupId}`,
+        {
+          headers: {
+            "x-auth-token": `${localStorage.getItem("AccesToken")}`,
+          },
+        }
+      );
+      console.log(res);
+      toast.success(res.data.message);
+      navigate("/main");
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  };
+
   const formatDate = (isoString) => {
     const date = new Date(isoString);
 
@@ -185,10 +206,6 @@ const GroupDetail = () => {
       let response = await axios.get(
         "https://nt-shopping-list.onrender.com/api/users/search",
         {
-          headers: {
-            "x-auth-token": `${localStorage.getItem("AccesToken")}`,
-            "Content-Type": "application/json",
-          },
           params: {
             q: query,
           },
@@ -199,17 +216,25 @@ const GroupDetail = () => {
       console.log(error);
     }
   };
-  const addNewMember = async (id) => {
-    let response = await axios.post(
-      `https://nt-shopping-list.onrender.com/api/groups/${id}/members`,
-      {},
-      {
-        headers: {
-          "x-auth-token": `${localStorage.getItem("AccesToken")}`,
-        },
-      }
-    );
-    setMembers([...members, response.data.member]);
+  const addNewMember = async (searchMember) => {
+    try {
+      let response = await axios.post(
+        `https://nt-shopping-list.onrender.com/api/groups/${groupId}/members`,
+        { memberId: searchMember._id },
+        {
+          headers: {
+            "x-auth-token": `${localStorage.getItem("AccesToken")}`,
+          },
+        }
+      );
+      toast.success(response.data.message);
+
+      setAddMember(false);
+      setMembers([...members, searchMember]);
+    } catch (error) {
+      console.log(error);
+      toast(error.response.data.message);
+    }
 
     // console.log(response);
   };
@@ -236,9 +261,22 @@ const GroupDetail = () => {
                 >
                   Add member
                 </button>
-                <button onClick={leaveGroup} className="p-1 hover:bg-[#f8f9fa]">
-                  Leave Group
-                </button>
+
+                {me._id === group.owner._id ? (
+                  <button
+                    onClick={deleteGroup}
+                    className="p-1 hover:bg-[#f8f9fa]"
+                  >
+                    Delete Group
+                  </button>
+                ) : (
+                  <button
+                    onClick={leaveGroup}
+                    className="p-1 hover:bg-[#f8f9fa]"
+                  >
+                    Leave Group
+                  </button>
+                )}
               </div>
             </div>
           )}
@@ -264,13 +302,17 @@ const GroupDetail = () => {
                   className="border px-2 py-1 w-full outline-none rounded mb-2"
                 />
               </form>
-              <div>
+              <div className="scroll-container">
                 {Array.isArray(searchMembers) &&
                   searchMembers.map((searchMember) => (
-                    <div key={searchMember._id} className="p-2 border rounded">
-                      <button onClick={() => addNewMember(searchMember._id)}>
+                    <div
+                      key={searchMember._id}
+                      onClick={(e) => e.stopPropagation()}
+                      className="p-2 border rounded"
+                    >
+                      <p onClick={() => addNewMember(searchMember)}>
                         {searchMember.name}
-                      </button>
+                      </p>
                     </div>
                   ))}
               </div>
@@ -370,9 +412,9 @@ const GroupDetail = () => {
                   <p>{member.name}</p>
                   <p>{member.username}</p>
                 </div>
-                {me._id === group.owner._id ? (
+                {group?.owner?._id === me?._id && member?.id !== me?._id ? (
                   <button
-                    onClick={() => delMember(member._id)}
+                    onClick={() => delMember(member?._id)}
                     className="bg-red-500 p-2 rounded-md"
                   >
                     <DeleteOutlinedIcon sx={{ color: "white" }} />

@@ -13,3 +13,7 @@
   color: red;
   font-size: 0.9rem;
 }
+.scroll-container {
+  max-height: 280px; /* Maksimum balandlik */
+  overflow-y: auto; /* Scrollni yoqing */
+}

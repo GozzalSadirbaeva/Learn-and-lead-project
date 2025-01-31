@@ -16,9 +16,28 @@ import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import "./Sidebar.css";
 const Sidebar = () => {
-  const [open, setOpen] = React.useState(true);
-  const [groups, setGroups] = useState([]);
+  // const dispatch = useDispatch();
+  // const { groups, status, error } = useSelector((state) => state.groups);
+
+  // // Hooks should be called unconditionally
+  // useEffect(() => {
+  //   dispatch(fetchGroups());
+  // }, [dispatch]);
+
+  // // Don't return before hooks are executed
+  // if (status === "loading") {
+  //   return <p>Loading...</p>;
+  // }
+
+  // if (status === "failed") {
+  //   return <p>Error: {error}</p>;
+  // }
+
+  const [open, setOpen] = useState(true);
   const [isCreating, setIsCreating] = useState(false);
+  // const [groups, setGroups] = useContext(GroupContext);
+
+  const [groups, setGroups] = useState([]);
   useEffect(() => {
     (async function () {
       try {
@@ -63,7 +82,7 @@ const Sidebar = () => {
     if (response.status === 201) {
       toast.success(response.data.message);
       setGroups([...groups, response.data.group]);
-      
+
       setIsCreating(!isCreating);
     }
   };
@@ -159,4 +178,4 @@ const Sidebar = () => {
   );
 };
 
-export default memo (Sidebar);
+export default memo(Sidebar);
