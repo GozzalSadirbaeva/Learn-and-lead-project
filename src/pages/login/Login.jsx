@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import axios from "axios";
 import { ErrorMessage, Field, Formik } from "formik";
-import React, { memo, useState } from "react";
+import React, { memo } from "react";
 import { NavLink, Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
@@ -39,7 +39,7 @@ const Login = () => {
       }
     } catch (error) {
       console.error(error);
-      toast.error("Login failed. Please try again.");
+      toast.error(error.response.data.message);
     } finally {
       setSubmitting(false);
     }

@@ -6,10 +6,11 @@ import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import PendingIcon from "@mui/icons-material/Pending";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import axios from "axios";
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useContext, useEffect, useState } from "react";
 
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { GroupContext } from "../../context/GroupContext";
 import "./GroupDetail.css";
 const GroupDetail = () => {
   const { groupId } = useParams();
@@ -23,6 +24,7 @@ const GroupDetail = () => {
   const [me, setMe] = useState([]);
   const [bought, setBought] = useState(false);
   const [isPending, setIsPending] = useState("");
+  const [groups, setGroups] = useContext(GroupContext);
   useEffect(() => {
     (async function () {
       let response = await axios.get(
@@ -132,8 +134,11 @@ const GroupDetail = () => {
         }
       );
       console.log(res);
-      toast.success(res.data.message);
-      navigate("/main");
+      if (res.status === 200) {
+        setGroups(groups.filter((val) => val._id !== groupId));
+        toast.success(res.data.message);
+        navigate("/main");
+      }
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);

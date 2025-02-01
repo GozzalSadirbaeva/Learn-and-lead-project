@@ -1,24 +1,35 @@
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
-import React, { memo, useEffect, useState } from "react";
-const Main = () => {
-  const [me, setMe] = useState([]);
+import React, { memo, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { GroupContext } from "../../context/GroupContext";
 
-  useEffect(() => {
-    (async function () {
-      let resme = await axios.get(
-        `https://nt-shopping-list.onrender.com/api/auth`,
+const Main = () => {
+  const navigate = useNavigate();
+  const [groups, setGroups, me, setMe] = useContext(GroupContext);
+  // console.log(me, "meeee");
+  const delAccount = async () => {
+    try {
+      let res = await axios.delete(
+        `https://nt-shopping-list.onrender.com/api/users`,
         {
           headers: {
             "x-auth-token": `${localStorage.getItem("AccesToken")}`,
           },
         }
       );
-      setMe(resme.data);
-      console.log(resme.data);
-    })();
-  }, []);
+      console.log(res);
+      toast.success(res.data.message);
+      localStorage.removeItem("AccesToken")
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+      // toast.error(error.response.data.message);
+    }
+  };
+
   return (
     <div>
       <div className="bg-white m-5 p-5 rounded-lg">
@@ -29,7 +40,10 @@ const Main = () => {
               <ContentCopyIcon />
               Copy Username
             </button>
-            <button className="px-3 py-1 bg-red-500 text-white rounded-md justify-center flex">
+            <button
+              onClick={delAccount}
+              className="px-3 py-1 bg-red-500 text-white rounded-md justify-center flex"
+            >
               <DeleteIcon /> Delete Account
             </button>
           </div>

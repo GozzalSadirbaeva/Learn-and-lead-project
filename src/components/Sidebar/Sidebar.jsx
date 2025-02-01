@@ -11,51 +11,16 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import axios from "axios";
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
+import { GroupContext } from "../../context/GroupContext";
 import "./Sidebar.css";
 const Sidebar = () => {
-  // const dispatch = useDispatch();
-  // const { groups, status, error } = useSelector((state) => state.groups);
-
-  // // Hooks should be called unconditionally
-  // useEffect(() => {
-  //   dispatch(fetchGroups());
-  // }, [dispatch]);
-
-  // // Don't return before hooks are executed
-  // if (status === "loading") {
-  //   return <p>Loading...</p>;
-  // }
-
-  // if (status === "failed") {
-  //   return <p>Error: {error}</p>;
-  // }
 
   const [open, setOpen] = useState(true);
   const [isCreating, setIsCreating] = useState(false);
-  // const [groups, setGroups] = useContext(GroupContext);
-
-  const [groups, setGroups] = useState([]);
-  useEffect(() => {
-    (async function () {
-      try {
-        let response = await axios.get(
-          "https://nt-shopping-list.onrender.com/api/groups",
-          {
-            headers: {
-              "x-auth-token": `${localStorage.getItem("AccesToken")}`,
-            },
-          }
-        );
-        // console.log(response.data);
-        setGroups(response.data);
-      } catch (error) {
-        console.error("Error fetching groups:", error);
-      }
-    })();
-  }, []);
+  const [groups, setGroups] = useContext(GroupContext);
 
   const handleClick = () => {
     setOpen(!open);
